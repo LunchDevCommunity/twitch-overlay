@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/comfy.js@latest/dist/comfy.min.js"></script>
+</head>
+<body>
+	<style>
+		html, body {
+			margin: 0;
+			background-color: white;
+		}
+
+		#chatbox {
+			width: 500px;
+			height: 750px;
+			background-color: tomato;
+			margin: 10%;
+
+			overflow: auto;
+			display: flex;
+			flex-direction: column-reverse;
+		}
+
+		#chatbox::-webkit-scrollbar {
+			display: none;
+		}
+
+		p.mod {
+			font-weight: bold;
+		}
+	</style>
+
+
+	<div id="chatbox">
+		<ul></ul>
+	</div>
+
+	<script>
+		const chatbox = document.querySelector('#chatbox ul');
+
+		ComfyJS.onChat = (user, command, message, flags, extra) => {
+			const newMessage = document.createElement('li');
+
+			const sender = document.createElement('p');
+			if (message.mod) {
+				sender.classList.add('mod');
+			}
+			sender.innerText = user;
+
+			const messageContents = document.createElement('blockquote');
+			messageContents.innerText = command;
+
+			console.table({user, command, flags});
+			console.table(message);
+			console.table(extra);
+
+			newMessage.appendChild(sender);
+			newMessage.appendChild(messageContents);
+			chatbox.appendChild(newMessage);
+		}
+		ComfyJS.Init('gamesdonequick');
+	</script>
+</body>
+</html>
